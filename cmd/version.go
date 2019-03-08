@@ -7,6 +7,7 @@ import (
 )
 
 func init() {
+	versionCmd.PersistentFlags().StringVarP(&userLicense, "license", "l", "", "Name of license for the project (can provide `licensetext` in config)")
 	rootCmd.AddCommand(versionCmd)
 }
 

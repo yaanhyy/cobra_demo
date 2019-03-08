@@ -11,15 +11,19 @@ import (
 var cfgFile string
 var projectBase string
 var userLicense string
+var source string
 
 func init() {
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cobra.yaml)")
 	//rootCmd.PersistentFlags().StringVarP(&projectBase, "projectbase", "b", "", "base project directory eg. github.com/spf13/")
-	//rootCmd.PersistentFlags().StringP("author", "a", "YOUR NAME", "Author name for copyright attribution")
+	rootCmd.PersistentFlags().StringP("author", "a", "YOUR NAME", "Author name for copyright attribution")
 	//rootCmd.PersistentFlags().StringVarP(&userLicense, "license", "l", "", "Name of license for the project (can provide `licensetext` in config)")
+	rootCmd.PersistentFlags().StringVarP(&source, "source","s", "123", "Source directory to read from")
 	rootCmd.PersistentFlags().Bool("viper", true, "Use Viper for configuration")
+	fmt.Println(source)
 	viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
+	fmt.Println(viper.GetString("author"))
 	viper.BindPFlag("projectbase", rootCmd.PersistentFlags().Lookup("projectbase"))
 	viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
 	viper.SetDefault("author", "NAME HERE <EMAIL ADDRESS>")
@@ -29,6 +33,7 @@ func init() {
 func initConfig() {
 	// Don't forget to read config either from cfgFile or from home directory!
 	if cfgFile != "" {
+
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
 	} else {
