@@ -57,7 +57,7 @@ var rootCmd = &cobra.Command{
                 love by spf13 and friends in Go.
                 Complete documentation is available at http://hugo.spf13.com`,
 	Run: func(cmd *cobra.Command, args []string) {
-		print("hello")
+		fmt.Println("hello")
 		// Do Stuff Here
 	},
 }
