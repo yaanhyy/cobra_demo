@@ -11,19 +11,21 @@ import (
 var cfgFile string
 var projectBase string
 var userLicense string
-var source string
+var auth string
 
 func init() {
+
 	cobra.OnInitialize(initConfig)
+	rootCmd.PersistentFlags().StringVarP(&userLicense, "license", "l", "lic", "Name of license for the project (can provide `licensetext` in config)")
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cobra.yaml)")
 	//rootCmd.PersistentFlags().StringVarP(&projectBase, "projectbase", "b", "", "base project directory eg. github.com/spf13/")
-	rootCmd.PersistentFlags().StringP("author", "a", "YOUR NAME", "Author name for copyright attribution")
+	rootCmd.PersistentFlags().StringVarP(&auth, "author", "a", "YOUR NAME", "Author name for copyright attribution")
 	//rootCmd.PersistentFlags().StringVarP(&userLicense, "license", "l", "", "Name of license for the project (can provide `licensetext` in config)")
-	rootCmd.PersistentFlags().StringVarP(&source, "source","s", "123", "Source directory to read from")
+	rootCmd.PersistentFlags().StringP("source","s", "123", "Source directory to read from")
 	rootCmd.PersistentFlags().Bool("viper", true, "Use Viper for configuration")
-	fmt.Println(source)
+	fmt.Println(auth)
 	viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
-	fmt.Println(viper.GetString("author"))
+	fmt.Println(userLicense)
 	viper.BindPFlag("projectbase", rootCmd.PersistentFlags().Lookup("projectbase"))
 	viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
 	viper.SetDefault("author", "NAME HERE <EMAIL ADDRESS>")
@@ -62,7 +64,12 @@ var rootCmd = &cobra.Command{
                 love by spf13 and friends in Go.
                 Complete documentation is available at http://hugo.spf13.com`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("hello")
+		source , err :=  cmd.PersistentFlags().GetString("source")
+		if err == nil {
+			fmt.Println(source)
+		}
+
+		fmt.Println(userLicense)
 		// Do Stuff Here
 	},
 }
