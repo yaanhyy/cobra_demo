@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	fmt.Printf("hiok");
+	fmt.Printf("hi, ok");
 	cmd.Execute()
 }
